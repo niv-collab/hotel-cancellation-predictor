@@ -91,9 +91,14 @@ input_encoded = input_encoded[feature_columns]
 # Scale + Predict
 # -------------------------------
 
+# Ensure correct dtype for XGBoost
+input_encoded = input_encoded.astype(np.float32)
+
+# Scale + Predict
 scaled = scaler.transform(input_encoded)
-prediction = model.predict(scaled)[0]
-prob = model.predict_proba(scaled)[0][1]
+prediction = int(model.predict(scaled)[0])
+prob = float(model.predict_proba(scaled)[0][1])
+
 
 # -------------------------------
 # Display Results
